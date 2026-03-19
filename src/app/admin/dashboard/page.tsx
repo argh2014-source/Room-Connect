@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import { Reservation, ReservationDetail, Room } from '@/types';
+import ConfirmedReservationsTab from '@/components/admin/ConfirmedReservationsTab';
 
 export default function AdminDashboard() {
   const { profile, loading: authLoading } = useAuth();
@@ -13,7 +14,7 @@ export default function AdminDashboard() {
   const [reservations, setReservations] = useState<(Reservation & { details: any[] })[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'list' | 'reports'>('list');
+  const [activeTab, setActiveTab] = useState<'list' | 'confirmed' | 'reports'>('list');
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -231,6 +232,12 @@ export default function AdminDashboard() {
           Liste des Réservations
         </button>
         <button 
+          className={`tab-btn ${activeTab === 'confirmed' ? 'active' : ''}`}
+          onClick={() => setActiveTab('confirmed')}
+        >
+          Réservations Confirmées
+        </button>
+        <button 
           className={`tab-btn ${activeTab === 'reports' ? 'active' : ''}`}
           onClick={() => setActiveTab('reports')}
         >
@@ -307,6 +314,8 @@ export default function AdminDashboard() {
                 </tbody>
               </table>
             </div>
+          ) : activeTab === 'confirmed' ? (
+            <ConfirmedReservationsTab reservations={reservations} />
           ) : (
             <div className="detailed-dashboard-grid w-100">
               {/* Block 1: Performance */}
