@@ -66,14 +66,22 @@ export default function RoomCard({ room }: RoomCardProps) {
             <span className="price-unit">/ nuit</span>
           </div>
           
-          <div className="nights-selector flex-center gap-10">
-            <label className="text-xs font-bold uppercase">Nuits:</label>
-            <input 
-              type="number" min="1" max="30" 
-              value={nuitees} 
-              onChange={(e) => setNuitees(parseInt(e.target.value) || 1)}
-              style={{ width: '50px', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}
-            />
+          <div className="nights-selector flex flex-col items-end">
+            <small className="text-blue font-bold mb-2" style={{ fontSize: '0.6rem' }}>
+              Début: 6 Avril 2026
+            </small>
+            <div className="flex align-center gap-10">
+              <label className="text-xs font-bold uppercase">Nuits:</label>
+              <input 
+                type="number" min="1" max="30" 
+                value={nuitees} 
+                onChange={(e) => setNuitees(parseInt(e.target.value) || 1)}
+                style={{ width: '50px', padding: '5px', borderRadius: '4px', border: '1px solid #ddd' }}
+              />
+            </div>
+            <small className="text-muted" style={{ fontSize: '0.6rem' }}>
+              Fin: {6 + nuitees} Avril
+            </small>
           </div>
         </div>
 

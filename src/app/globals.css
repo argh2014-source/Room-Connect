@@ -1525,7 +1525,7 @@ button {
 
 .cart-item-row {
   display: grid;
-  grid-template-columns: 1fr 100px 120px 150px 50px;
+  grid-template-columns: 1.5fr minmax(90px, 1fr) minmax(110px, 1fr) minmax(110px, 1fr) minmax(120px, 1fr) 50px;
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
@@ -2425,3 +2425,116 @@ button {
   color: inherit;
 }
 
+/* --- AFCD 2026 Mobile Responsiveness For Cart & Checkout --- */
+
+.total-pay-highlight {
+  background: rgba(255, 122, 0, 0.1);
+  border: 2px solid var(--secondary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.total-pay-highlight .font-bold {
+  font-size: 1.2rem;
+  color: var(--nav-dark);
+}
+
+.total-pay-highlight .price-amount {
+  font-size: 1.8rem;
+  color: var(--secondary);
+}
+
+@media (max-width: 992px) {
+  .cart-item-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-item-row {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+    position: relative;
+    padding: 1.2rem;
+  }
+
+  .cart-item-row > button.btn-icon.text-error {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+  }
+
+  /* Make price per night line up similarly or span */
+  .cart-item-row > div:not(.cart-item-info) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 0.8rem;
+  }
+  
+  .cart-item-row > div.text-center.font-bold,
+  .cart-item-row > div.text-primary.font-bold.text-right {
+    text-align: left !important;
+    font-size: 1.1rem !important;
+  }
+  
+  .qty-control .flex-col {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .qty-control .flex-col > small.text-xs.uppercase {
+    margin-bottom: 0 !important;
+  }
+  
+  .qty-control .flex-col > small.text-blue {
+    margin-top: 0 !important;
+  }
+
+  .cart-item-info {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+  
+  .cart-item-info h3 {
+    font-size: 1.2rem;
+    max-width: 85%;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary-box {
+    position: static;
+    margin-top: 1rem;
+    padding: 1.5rem;
+  }
+
+  .checkout-centered-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .total-pay-highlight {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .total-pay-highlight .price-amount {
+    font-size: 2rem;
+  }
+}

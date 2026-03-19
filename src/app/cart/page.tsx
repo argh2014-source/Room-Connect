@@ -21,12 +21,17 @@ export default function CartPage() {
 
   return (
     <main className="section container mt-80">
-      <h1 className="section-title">Récapitulatif de votre sélection</h1>
-      
+      <div className="flex-between align-center mb-10">
+        <h1 className="section-title mb-0">Récapitulatif de votre sélection</h1>
+        <div className="alert alert-info py-5 px-15" style={{ borderRadius: '20px', fontSize: '0.9rem', background: '#e0f2fe', color: '#0369a1', border: '1px solid #bae6fd' }}>
+          🗓️ Séjour à partir du <strong>6 Avril 2026</strong>
+        </div>
+      </div>
+      <p className="mb-40 text-muted">Vérifiez vos choix avant de procéder au paiement. Tous les séjours débutent impérativement le 6 Avril.</p>
       <div className="detail-grid">
         <div className="cart-list">
           {cart.map((item) => (
-            <div key={item.id} className="cart-item-row" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr 0.2fr', alignItems: 'center' }}>
+            <div key={item.id} className="cart-item-row">
               <div className="cart-item-info">
                 <h3 className="mb-0">{item.nom}</h3>
                 <small className="text-muted">{item.categorie}</small>
@@ -59,6 +64,9 @@ export default function CartPage() {
                     <span className="mx-10">{item.nuitees}</span>
                     <button className="qty-btn" onClick={() => updateNights(item.id, item.nuitees + 1)}>+</button>
                   </div>
+                  <small className="text-blue mt-5 font-bold" style={{ fontSize: '0.65rem' }}>
+                    6 - {6 + item.nuitees} Avril
+                  </small>
                 </div>
               </div>
               <div className="text-primary font-bold text-right" style={{ fontSize: '1.1rem' }}>
@@ -83,7 +91,7 @@ export default function CartPage() {
             
             <hr className="mb-20" />
             
-            <div className="flex-between mb-30">
+            <div className="total-pay-highlight mb-30">
               <span className="font-bold">Total à payer</span>
               <span className="price-amount">{totalPrice.toLocaleString()} FCFA</span>
             </div>

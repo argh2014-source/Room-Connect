@@ -53,9 +53,9 @@ export default function CheckoutPage() {
       if (detError) throw detError;
 
       // 3. Clear Cart & Redirect to WhatsApp
-      const whatsappMsg = `Bonjour AFCD 2026,\n\nJe viens de soumettre une réservation :\n- Nom : ${formData.nom}\n- Transaction ID : ${formData.transactionId}\n- Montant Total : ${totalPrice.toLocaleString()} FCFA\n\nDétails :\n${cart.map(item => `- ${item.nom} : ${item.quantite} ch. x ${item.nuitees} nuits`).join('\n')}\n\nMerci de valider ma réservation.`;
+      const whatsappMsg = `Bonjour AFCD 2026,\n\nJe viens de soumettre une réservation :\n- Nom : ${formData.nom}\n- Transaction ID : ${formData.transactionId}\n- Montant Total : ${totalPrice.toLocaleString()} FCFA\n\nDétails des séjours (Début : 6 Avril 2026) :\n${cart.map(item => `- ${item.nom} : ${item.quantite} ch. pour ${item.nuitees} nuits (du 6 au ${6 + item.nuitees} Avril)`).join('\n')}\n\nMerci de valider ma réservation.`;
       const encodedMsg = encodeURIComponent(whatsappMsg);
-      const whatsappUrl = `https://wa.me/22952818100?text=${encodedMsg}`; // Placeholder number
+      const whatsappUrl = `https://wa.me/22952818100?text=${encodedMsg}`; // Contact number
 
       clearCart();
       window.open(whatsappUrl, '_blank');
@@ -91,14 +91,14 @@ export default function CheckoutPage() {
                 <div style={{ textAlign: 'left' }}>
                   <div className="font-bold">{item.nom}</div>
                   <small className="text-muted">
-                    {item.quantite} ch. x {item.nuitees} nuits x {item.prix.toLocaleString()} FCFA
+                    {item.quantite} ch. x {item.nuitees} nuits (du 6 au {6 + item.nuitees} Avril)
                   </small>
                 </div>
                 <div className="font-bold">{(item.prix * item.quantite * item.nuitees).toLocaleString()}</div>
               </div>
             ))}
           </div>
-          <div className="flex-between mt-20 pt-20" style={{ borderTop: '2px solid #333' }}>
+          <div className="total-pay-highlight mt-20">
             <span className="font-bold">TOTAL À RÉGLER</span>
             <span className="price-amount">{totalPrice.toLocaleString()} FCFA</span>
           </div>

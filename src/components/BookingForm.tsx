@@ -11,15 +11,18 @@ interface BookingFormProps {
 
 export default function BookingForm({ hotelId, rooms }: BookingFormProps) {
   const [bookingStatus, setBookingStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [nuitees, setNuitees] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    checkIn: '',
-    checkOut: '',
-    guests: 1,
     roomId: ''
   });
+
+  const checkInDateStr = "2026-04-06";
+  const checkOutDate = new Date("2026-04-06");
+  checkOutDate.setDate(checkOutDate.getDate() + nuitees);
+  const checkOutDateStr = checkOutDate.toISOString().split('T')[0];
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,20 +30,12 @@ export default function BookingForm({ hotelId, rooms }: BookingFormProps) {
     const selectedRoom = rooms.find(r => r.id === formData.roomId);
     if (!selectedRoom) return;
 
-    // Calcul du nombre de nuits
-    const checkInDate = new Date(formData.checkIn);
-    const checkOutDate = new Date(formData.checkOut);
-    const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
-    const nuitees = Math.max(1, Math.ceil(timeDiff / (1000 * 3600 * 24)));
-    
     const totalPrix = selectedRoom.prix * nuitees;
 
     const message = `Bonjour RoomConnect, je souhaite réserver à l'Hôtel AFCD 2026 :
 - Nom : ${formData.name}
 - Email : ${formData.email}
-- Arrivée : ${formData.checkIn}
-- Départ : ${formData.checkOut}
-- Durée : ${nuitees} ${nuitees > 1 ? 'nuits' : 'nuit'}
+- Séjour : du 6 Avril au ${6 + nuitees} Avril 2026 (${nuitees} ${nuitees > 1 ? 'nuits' : 'nuit'})
 - Chambre : ${selectedRoom.nom}
 - Prix total : ${totalPrix.toLocaleString()} FCFA (${selectedRoom.prix.toLocaleString()} / nuit)`;
 
@@ -98,26 +93,27 @@ export default function BookingForm({ hotelId, rooms }: BookingFormProps) {
               placeholder="+229 01 02 03 04"
             />
           </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="checkIn">Arrivée</label>
+          <div className="form-row border-y py-15 mb-20 bg-light-blue" style={{ borderRadius: '8px', padding: '15px' }}>
+            <div className="form-group mb-0">
+              <label className="text-xs uppercase font-bold text-blue">Arrivée</label>
+              <div className="font-bold">6 Avril 2026</div>
+            </div>
+            <div className="form-group mb-0">
+              <label htmlFor="nuitees" className="text-xs uppercase font-bold text-blue">Nombre de nuits</label>
               <input 
-                id="checkIn"
-                type="date" 
+                id="nuitees"
+                type="number" 
+                min="1"
+                max="30"
                 required 
-                value={formData.checkIn}
-                onChange={e => setFormData({...formData, checkIn: e.target.value})}
+                value={nuitees}
+                onChange={e => setNuitees(parseInt(e.target.value) || 1)}
+                className="w-100"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="checkOut">Départ</label>
-              <input 
-                id="checkOut"
-                type="date" 
-                required 
-                value={formData.checkOut}
-                onChange={e => setFormData({...formData, checkOut: e.target.value})}
-              />
+            <div className="form-group mb-0">
+              <label className="text-xs uppercase font-bold text-blue">Départ</label>
+              <div className="font-bold">{6 + nuitees} Avril 2026</div>
             </div>
           </div>
           <div className="form-group">
