@@ -163,9 +163,14 @@ export default function CheckoutPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading} className="btn btn-secondary btn-centered mt-40 py-15" style={{ fontSize: '1.1rem' }}>
-            {loading ? 'Traitement...' : 'Confirmer ma réservation'}
-          </button>
+          <div className="flex w-100 mt-40 flex-col sm:flex-row" style={{ maxWidth: '500px', gap: '15px' }}>
+            <button type="button" onClick={() => router.push('/cart')} disabled={loading} className="btn btn-outline w-100 py-15" style={{ fontSize: '1.05rem', justifyContent: 'center' }}>
+              Modifier le panier
+            </button>
+            <button type="submit" disabled={loading} className="btn btn-secondary w-100 py-15" style={{ fontSize: '1.05rem', justifyContent: 'center' }}>
+              {loading ? 'Traitement...' : 'Confirmer ma réservation'}
+            </button>
+          </div>
         </form>
       </div>
     </main>
