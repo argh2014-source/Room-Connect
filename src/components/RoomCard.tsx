@@ -13,13 +13,13 @@ export default function RoomCard({ room }: RoomCardProps) {
   const [nuitees, setNuitees] = useState(1);
   const { addToCart, cart } = useCart();
   
-  let parsedImages = room.images;
+  let parsedImages: any = room.images;
   if (typeof parsedImages === 'string') {
     try {
       parsedImages = JSON.parse(parsedImages);
     } catch(e) {
-      if ((parsedImages as string).startsWith('{')) {
-        parsedImages = (parsedImages as string).slice(1, -1).split(',').map(s => s.replace(/^"|"$/g, '').trim());
+      if (parsedImages.startsWith('{')) {
+        parsedImages = parsedImages.slice(1, -1).split(',').map((s: string) => s.replace(/^"|"$/g, '').trim());
       } else {
         parsedImages = [parsedImages];
       }
