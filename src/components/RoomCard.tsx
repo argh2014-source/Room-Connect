@@ -13,8 +13,21 @@ export default function RoomCard({ room }: RoomCardProps) {
   const [nuitees, setNuitees] = useState(1);
   const { addToCart, cart } = useCart();
   
-  const images = room.images && room.images.length > 0 
-    ? room.images 
+  let parsedImages = room.images;
+  if (typeof parsedImages === 'string') {
+    try {
+      parsedImages = JSON.parse(parsedImages);
+    } catch(e) {
+      if ((parsedImages as string).startsWith('{')) {
+        parsedImages = (parsedImages as string).slice(1, -1).split(',').map(s => s.replace(/^"|"$/g, '').trim());
+      } else {
+        parsedImages = [parsedImages];
+      }
+    }
+  }
+
+  const images = parsedImages && Array.isArray(parsedImages) && parsedImages.length > 0 
+    ? parsedImages 
     : ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800'];
 
   const nextImage = (e: React.MouseEvent) => {
